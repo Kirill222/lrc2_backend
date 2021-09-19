@@ -39,5 +39,28 @@ const getBooks = async (req, res, next) => {
   res.json({ books: books.map((book) => book.toObject({ getters: true })) })
 }
 
+//DELETE a book
+const deleteBook = async (req, res, next) => {
+    
+    const bookId = req.params.bookId;
+
+    let bookToDelete;
+    try {
+        bookToDelete = await Book.findById(bookId);
+    } catch (error) {
+        error = new HttpError("The book to delete was not found", 500);
+        return next(error);
+    }
+
+    try {
+        await bookToDelete.remove();
+    } catch (error) {
+        console.log(error);
+    }
+
+    res.status(200).json({ message: "Book Deleted" });
+}
+
 exports.createBook = createBook
 exports.getBooks = getBooks
+exports.deleteBook = deleteBook
