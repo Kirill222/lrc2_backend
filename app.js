@@ -1,5 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const booksRoutes = require('./#routes/books_routes')
 
 const app = express()
 
@@ -20,16 +21,20 @@ app.use((req, res, next) => {
   })
 
 
-  //Mongoose
-  mongoose
-  .connect('mongodb+srv://kirill:kirill@cluster0.ohvr9.mongodb.net/lrc2_backend?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {сды       
-        app.listen(5000)
-       
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+  app.use('/api', booksRoutes)
+
+
+ 
+  try {
+    // Connect to the MongoDB cluster
+     mongoose.connect(
+      'mongodb+srv://kirill:kirill@cluster0.ohvr9.mongodb.net/lrc2_backend?retryWrites=true&w=majority',
+      { useNewUrlParser: true, useUnifiedTopology: true },
+      () => console.log(" Mongoose is connected")
+    );
+
+  } catch (e) {
+    console.log("could not connect");
+  }
+ 
+ app.listen(5000, () => console.log('application is running on port 5000'))
