@@ -61,6 +61,38 @@ const deleteBook = async (req, res, next) => {
     res.status(200).json({ message: "Book Deleted" });
 }
 
+//UPDATE a book
+const updateBook = async (req, res, next) => {
+
+    const bookId = req.params.bookId
+    const { title, author, rating, yearOfPublication } = req.body
+    //find the book that needs to be updated
+    let updatedBook
+    try {
+      updatedBook = await Book.findById(bookId)
+    } catch (error) {
+      error = new HttpError(
+        "There is no such a book in database to be updated",
+        500
+      )
+      return next(error)
+    }
+  
+    updatedBook.title = title
+    updatedBook.author = author
+    updatedBook.rating = rating
+    updatedBook.yearOfPublication = yearOfPublication    
+  
+    //save the changes
+    try {
+      await updatedBook.save()
+    } catch (error) {
+      console.log(error)
+    }
+    res.status(200).json({ book: updatedBook.toObject({ getters: true }) })
+}
+
 exports.createBook = createBook
 exports.getBooks = getBooks
 exports.deleteBook = deleteBook
+exports.updateBook = updateBook
