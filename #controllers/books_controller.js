@@ -24,19 +24,8 @@ const createBook = async (req, res, next) => {
 }
 
 //GET all books
-const getBooks = async (req, res, next) => {
-  let books
-  try {
-    books = await Book.find();
-  } catch (error) {
-    error = new HttpError(
-      "Books cannot be accessed, somethihg went wrong",
-      404
-    )
-    return next(error)
-  }
-
-  res.json({ books: books.map((book) => book.toObject({ getters: true })) })
+const getBooks = async (req, res, next) => {  
+  res.json(res.paginatedResults)
 }
 
 //DELETE a book
