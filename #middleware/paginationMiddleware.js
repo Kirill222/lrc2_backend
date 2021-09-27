@@ -21,6 +21,8 @@ function paginatedResults(model) {
                 limit: limit
             }
         }
+
+        result.totalCount = await model.countDocuments()
         
         //the most important block of code in this commit
         try {
