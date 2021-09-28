@@ -2,9 +2,7 @@ const mongoose = require("mongoose")
 const Book = require("../#models/book_model")
 
 //POST - create a book
-const createBook = async (req, res, next) => {
-
-  console.log(req.file)
+const createBook = async (req, res, next) => {  
 
   const { title, author, rating, yearOfPublication } = req.body
 
