@@ -4,6 +4,7 @@ const booksRoutes = require('./#routes/books_routes')
 
 const app = express()
 
+app.use('/uploads', express.static('uploads'))
 app.use(express.json())
 
 //handeling CORS errors:
