@@ -4,6 +4,7 @@ const booksRoutes = require('./#routes/books_routes')
 
 const app = express()
 
+app.use('/uploads', express.static('uploads'))
 app.use(express.json())
 
 //handeling CORS errors:
@@ -13,6 +14,7 @@ app.use((req, res, next) => {
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     )
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE")
     if (res.method === "OPTIONS") {
       res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET")
       return res.status(200).json({})
