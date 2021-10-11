@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const booksRoutes = require('./#routes/books_routes')
+const authRoutes = require('./#routes/auth_routes')
 
 const app = express()
 
@@ -22,7 +23,7 @@ app.use((req, res, next) => {
     next()
   })
 
-
+  app.use(authRoutes)
   app.use('/api', booksRoutes)
 
 
